@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="css/styles.css" />
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+		<link
+			rel="stylesheet"
+			href="css/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="css/font-awesome/css/font-awesome.css" />
+	</head>
+
+	<body>
+		<div id="grid">
+			<div class="main">
+				<img src="img/gia-logo.png" />
+				<h1>Welcome to the GIA Rarity App</h1>
+				<h2>Start by selecting a dimension and value.</h2>
+				<div
+					class="big-diamond-blink"
+					alt="diamond reflection a pie graphic"></div>
+				<div class="footnote-main">
+					<div class="diamond-img"></div>
+					<div class="diamond-text">
+						<p class="your-diamond">Your diamond</p>
+						<p class="make-select">Make a selection</p>
+					</div>
+					<div class="slidecontainer">
+						<input
+							type="range"
+							min="1"
+							max="100"
+							value="50"
+							class="slider-range"
+							id="myRange" />
+						<div>
+							<p class="range-paragraph">RARITY</p>
+							<!-- <div class="break"></div> -->
+							<p class="rare-data">4 in 5</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<form class="accordion">
+				<div class="header">
+					<i class="fa fa-check"></i>
+					<span class="shape-name">SHAPE</span>
+					<i class="fa fa-info-circle"></i>
+				</div>
+
+				<div class="content">
+					<div class="slider shape" id="shape">
+						<div class="box1 box" id="heart" data-id="Heart"></div>
+						<div class="box2 box" id="pear" data-id="Pear"></div>
+						<div
+							class="box3 box"
+							id="marquise"
+							data-id="Marquise"></div>
+						<div
+							class="box4 box"
+							id="cushion"
+							data-id="Cushion"></div>
+						<div class="box5 box" id="Round" data-id="Round"></div>
+						<div class="box6 box" id="oval" data-id="Oval"></div>
+						<div
+							class="box7 box"
+							id="square"
+							data-id="Square"></div>
+						<div
+							class="box8 box"
+							id="emerald"
+							data-id="Emerald"></div>
+						<div
+							class="box9 box"
+							id="rectangle"
+							data-id="Rectangle"></div>
+					</div>
+					<div class="chevrons">
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
+					</div>
+					<p class="info">
+						Shape refers to the geometric outline and overall
+						physical form of a diamond.
+					</p>
+				</div>
+				<div class="header">
+					<i class="fa fa-check"></i>
+					<span>CARAT WEIGHT</span>
+					<i class="fa fa-info-circle"></i>
+				</div>
+				<div class="content">
+					<div class="slider carat" id="carat">
+						<div class="box1 box"></div>
+						<div class="box2 box"></div>
+						<div class="box3 box"></div>
+						<div class="box4 box"></div>
+						<div class="box5 box"></div>
+						<div class="box6 box"></div>
+						<div class="box7 box"></div>
+						<div class="box8 box"></div>
+						<div class="box9 box"></div>
+					</div>
+					<p class="info">
+						Diamond carat weight measures how much a diamond weighs.
+					</p>
+					<div class="chevrons">
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
+					</div>
+				</div>
+				<div class="header">
+					<i class="fa fa-check"></i>
+					<span>CLARITY</span>
+					<i class="fa fa-info-circle"></i>
+				</div>
+				<div class="content">
+					<div class="slider clarity" id="clarity">
+						<div class="box1 box"></div>
+						<div class="box2 box"></div>
+						<div class="box3 box"></div>
+						<div class="box4 box"></div>
+						<div class="box5 box"></div>
+						<div class="box6 box"></div>
+						<div class="box7 box"></div>
+						<div class="box8 box"></div>
+						<div class="box9 box"></div>
+						<div class="box10 box"></div>
+						<div class="box11 box"></div>
+					</div>
+					<p class="info">
+						Minor inclusions that range from difficult to somewhat
+						easy to see are visible to a skilled grader at 10x.
+					</p>
+					<div class="chevrons">
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
+					</div>
+				</div>
+				<div class="header">
+					<i class="fa fa-check"></i>
+					<span>COLOR</span>
+					<i class="fa fa-info-circle"></i>
+				</div>
+				<div class="content">
+					<div class="slider color" id="color">
+						<div class="box1 box" id="D" data-id="D"></div>
+						<div class="box2 box" id="E" data-id="E"></div>
+						<div class="box3 box" id="F" data-id="F"></div>
+						<div class="box4 box" id="G" data-id="G"></div>
+						<div class="box5 box" id="H" data-id="H"></div>
+						<div class="box6 box" id="I" data-id="I"></div>
+						<div class="box7 box" id="J" data-id="J"></div>
+						<div class="box8 box" id="M" data-id="M"></div>
+						<div class="box9 box" id="N" data-id="N"></div>
+						<div class="box10 box" id="O" data-id="O"></div>
+						<div class="box11 box" id="P" data-id="P"></div>
+					</div>
+					<p class="info">
+						The diamond color evaluation of most gem-quality
+						diamonds is based on the absence of color.
+					</p>
+					<div class="chevrons">
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
+					</div>
+				</div>
+				<div class="header">
+					<i class="fa fa-check"></i>
+					<span>CUT</span>
+					<i class="fa fa-info-circle"></i>
+				</div>
+				<div class="content">
+					<div class="slider cut" id="cut">
+						<div class="box1 box" id="Poor-1" data-id="Poor"></div>
+						<div class="box2 box" id="Fair-1" data-id="Fair"></div>
+						<div class="box3 box" id="Good-1" data-id="Good"></div>
+						<div
+							class="box4 box"
+							id="Very-Good-1"
+							data-id="Very Good"></div>
+						<div
+							class="box5 box"
+							id="Excellent"
+							data-id="Excellent"></div>
+						<div
+							class="box6 box"
+							id="Very-Good-2"
+							data-id="Very Good"></div>
+						<div class="box7 box" id="Good-2" data-id="Good"></div>
+						<div class="box8 box" id="Fair-2" data-id="Fair"></div>
+						<div class="box9 box" id="Poor-2" data-id="Poor"></div>
+					</div>
+					<p class="info">
+						Cut determines how well a diamond’s facets interact with
+						light.
+					</p>
+					<div class="chevrons">
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
+					</div>
+				</div>
+				<div class="clear-button">
+					<button id="clear-gem" onclick="resetClick()">
+						Clear Selections
+					</button>
+				</div>
+				<div class="footnote">
+					<p>
+						© 2023 Gemological Institute of America Inc. GIA is a
+						nonprofit 501(c)(3) organization. All rights reserved.
+					</p>
+				</div>
+			</form>
+		</div>
+		<script src="js/jquery/dist/jquery.min.js"></script>
+		<script src="js/utility.js"></script>
+		<script src="data/data.js"></script>
+		<script src="data/data-id.js"></script>
+		<script src="js/panels.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
