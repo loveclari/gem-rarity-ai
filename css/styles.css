@@ -634,7 +634,7 @@ p.info {
 	padding: 30px;
 	font-size: 12px;
 	font-weight: 200;
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 }
 .footnote.p {
