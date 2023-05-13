@@ -73,66 +73,13 @@ function accordion() {
 
 accordion();
 
+////////// add year to footnote ///////////
+
+const textYear = document.getElementById("text-year");
+const currentYear = new Date().getFullYear();
+textYear.textContent += " " + currentYear;
+
 //////////////////// slider - carousel rotating right and left /////////////////////////////////
-
-// function rotate(a, b, c) {
-//     var lastChild = $(a).clone();
-//     $(c).removeClass("firstSlide");
-//     $(a).remove();
-//     $(b).prepend(lastChild);
-//     $(lastChild).addClass("firstSlide");
-// }
-
-// function unrotate(a, b) {
-//     var firstChild = $(a).clone();
-//     $(firstChild).addClass("firstSlide");
-//     $(firstChild).removeClass("firstSlide");
-//     $(b).append(firstChild);
-//     $(a).addClass("firstSlide");
-//     $(a).remove();
-// }
-
-// //next - adding class specific for each carousel;
-
-// $(".chevron-right-shape").click(function () {
-//     rotate(".shape div:last-child", ".shape", ".shape div:first-child");
-// });
-
-// $(".chevron-right-weight").click(function () {
-//     rotate(".carat div:last-child", ".carat", ".weight div:first-child");
-// });
-
-// $(".chevron-right-clarity").click(function () {
-//     rotate(".clarity div:last-child", ".clarity", ".clarity div:first-child");
-// });
-
-// $(".chevron-right-color").click(function () {
-//     rotate(".color div:last-child", ".color", ".color div:first-child");
-// });
-
-// $(".chevron-right-cut").click(function () {
-//     rotate(".cut div:last-child", ".cut", ".cut div:first-child");
-// });
-
-// $(".chevron-left-shape").click(function () {
-//     unrotate(".shape div:first-child", ".shape");
-// });
-
-// $(".chevron-left-weight").click(function () {
-//     unrotate(".carat div:first-child", ".carat");
-// });
-
-// $(".chevron-left-clarity").click(function () {
-//     unrotate(".clarity div:first-child", ".clarity");
-// });
-
-// $(".chevron-left-color").click(function () {
-//     unrotate(".color div:first-child", ".color");
-// });
-
-// $(".chevron-left-cut").click(function () {
-//     unrotate(".cut div:first-child", ".cut");
-// });
 
 function rotate(a, b, c) {
 	var lastChild = $(a).clone();
