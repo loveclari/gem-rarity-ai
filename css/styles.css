@@ -114,9 +114,10 @@ img {
 .big-diamond-blink {
 	background-image: url("../img/big-diamond-1.png");
 	background-position: center;
-	background-size: 80%;
-	height: 500px;
+	width: 100%;
+	height: auto;
 	background-repeat: no-repeat;
+	background-size: contain;
 	opacity: 1;
 	animation: blinking 3s ease infinite;
 	flex-grow: 1;
