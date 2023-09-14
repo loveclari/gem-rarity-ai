@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!--new gem rarity responsive-->
-
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 		<link rel="stylesheet" type="text/css" href="css/styles.css" />
 		<link
@@ -13,10 +11,8 @@
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
 		<link
 			rel="stylesheet"
-			href="node_modules\font-awesome\css\font-awesome.min.css" />
-		<link
-			rel="stylesheet"
-			href="node_modules\font-awesome\css\font-awesome.css" />
+			href="css/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="css/font-awesome/css/font-awesome.css" />
 	</head>
 
 	<body>
@@ -29,12 +25,13 @@
 					class="big-diamond-blink"
 					alt="diamond reflection a pie graphic"></div>
 				<div class="footnote-main">
-					<div>
+					<div class="diamond-img"></div>
+					<div class="diamond-text">
 						<p class="your-diamond">Your diamond</p>
 						<p class="make-select">Make a selection</p>
 					</div>
 					<div class="slidecontainer">
-						<input
+						<!--<input
 							type="range"
 							min="1"
 							max="100"
@@ -43,9 +40,9 @@
 							id="myRange" />
 						<div>
 							<p class="range-paragraph">RARITY</p>
-							<!-- <div class="break"></div> -->
+							<div class="break"></div> 
 							<p class="rare-data">4 in 5</p>
-						</div>
+						</div>-->
 					</div>
 				</div>
 			</div>
@@ -84,8 +81,8 @@
 							data-id="Rectangle"></div>
 					</div>
 					<div class="chevrons">
-						<div class="chevron-right-shape"></div>
-						<div class="chevron-left-shape"></div>
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
 					</div>
 					<p class="info">
 						Shape refers to the geometric outline and overall
@@ -113,8 +110,8 @@
 						Diamond carat weight measures how much a diamond weighs.
 					</p>
 					<div class="chevrons">
-						<div class="chevron-right-weight"></div>
-						<div class="chevron-left-weight"></div>
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
 					</div>
 				</div>
 				<div class="header">
@@ -141,8 +138,8 @@
 						easy to see are visible to a skilled grader at 10x.
 					</p>
 					<div class="chevrons">
-						<div class="chevron-right-clarity"></div>
-						<div class="chevron-left-clarity"></div>
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
 					</div>
 				</div>
 				<div class="header">
@@ -169,8 +166,8 @@
 						diamonds is based on the absence of color.
 					</p>
 					<div class="chevrons">
-						<div class="chevron-right-color"></div>
-						<div class="chevron-left-color"></div>
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
 					</div>
 				</div>
 				<div class="header">
@@ -204,8 +201,8 @@
 						light.
 					</p>
 					<div class="chevrons">
-						<div class="chevron-right-cut"></div>
-						<div class="chevron-left-cut"></div>
+						<div class="chevron-right"></div>
+						<div class="chevron-left"></div>
 					</div>
 				</div>
 				<div class="clear-button">
@@ -221,10 +218,10 @@
 				</div>
 			</form>
 		</div>
-		<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="js/jquery/dist/jquery.min.js"></script>
+		<script src="data/data.js"></script>
 		<script src="data/data-id.js"></script>
-		<script src="js/panels.js"></script>
+		<script src="js/panel.js"></script>
 		<script src="js/app.js"></script>
-		<script src="js/main.js"></script>
 	</body>
 </html>
