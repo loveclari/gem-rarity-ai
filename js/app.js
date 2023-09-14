@@ -764,10 +764,10 @@ function caratSelect(data) {
 					defaultUI(this, id);
 			}
 			logData();
+			lastClickedCaratId = id;
 			options = { carat: selectedCarat };
 			rarityRatio.innerHTML = calculateItemRatio(options, data);
 			gemSubHeading.innerHTML = `<b>${caratResult}%</b> of  ${selectedShape}, ${selectedCarat}ct <br>diamonds graded by <b>GIA</b> fall into this range`;
-			lastClickedCaratId = id;
 		}
 	});
 }
@@ -919,11 +919,11 @@ function claritySelect(data) {
 					clarityClicked = false;
 					defaultUI(this, id);
 			}
+			lastClickedClarityId = id;
 			gemSubHeading.innerHTML = `<b>${clarityResult}%</b> of  ${selectedShape}, ${selectedCarat}ct, ${selectedClarity} <br>diamonds graded by <b>GIA</b> fall into this range`;
 			logData();
 			options = { clarity: selectedClarity };
 			rarityRatio.innerHTML = calculateItemRatio(options, data);
-			lastClickedClarityId = id;
 		}
 	});
 }
