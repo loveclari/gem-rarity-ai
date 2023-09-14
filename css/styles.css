@@ -10,6 +10,7 @@
 	grid-template-columns: 2fr 1fr;
 	grid-template-rows: minmax(100vh, auto);
 }
+
 .main {
 	background-image: url("../img/hero-main-img.jpg");
 	background-repeat: no-repeat;
@@ -36,6 +37,36 @@
 	max-width: 70%;
 	margin-left: 100px;
 }
+
+.footnote-main .your-diamond {
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: 800;
+}
+
+.footnote-main .make-select {
+	font-size: 28px;
+	font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+	#grid {
+		display: block;
+	}
+	footnote-main > div {
+		flex: 1 1 100%;
+	}
+	.diamond-text {
+		max-width: 100%;
+		margin-left: 36px;
+	}
+	.footnote-main .your-diamond {
+		font-size: 12px;
+	}
+	.footnote-main .make-select {
+		font-size: 14px;
+	}
+}
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
 	#grid {
 		grid-template-columns: 1fr 1fr;
@@ -49,17 +80,6 @@
 	.diamond-text {
 		margin-left: 20px;
 	}
-}
-
-.footnote-main .your-diamond {
-	font-size: 12px;
-	text-transform: uppercase;
-	font-weight: 800;
-}
-
-.footnote-main .make-select {
-	font-size: 28px;
-	font-weight: 500;
 }
 
 span:nth-of-type(1) {
@@ -134,6 +154,12 @@ h2 {
 	/* flex-grow: 1; */
 	font-weight: 100;
 	font-size: 24px;
+}
+
+@media screen and (max-width: 768px) {
+	h1 {
+		margin-top: 0px !important;
+	}
 }
 
 .wrapper {
@@ -633,6 +659,11 @@ p.info {
 	font-weight: 200;
 	position: fixed;
 	bottom: 0;
+}
+@media screen and (max-width: 768px) {
+	.footnote {
+		position: relative;
+	}
 }
 .footnote.p {
 	text-align: center;
