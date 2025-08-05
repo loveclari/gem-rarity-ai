@@ -27,6 +27,90 @@ body {
 
 /* Essential Next.js styles only - main styles come from styles.css */
 
+/* Critical Layout Styles */
+#grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: minmax(100vh, auto);
+  min-height: 100vh;
+}
+
+.main {
+  background-image: url("/img/hero-main-img.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  padding: 10px;
+  position: relative;
+}
+
+.footnote-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.footnote-main .diamond-img {
+  max-width: 7%;
+}
+
+.footnote-main > div {
+  flex: 1 1 30%;
+}
+
+.diamond-text {
+  max-width: 70%;
+  margin-left: 100px;
+}
+
+.footnote-main .your-diamond {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: 0;
+}
+
+.footnote-main .make-select {
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.big-diamond-blink {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background-image: url("/img/big-diamond.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: blinking 2s infinite;
+}
+
+@keyframes blinking {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin: 0 0 30px 0;
+  color: #666;
+}
+
 /* Accordion functionality */
 .accordion .content.open {
   display: flex !important;
@@ -262,4 +346,85 @@ body {
   text-align: center;
   color: #666;
   font-size: 14px;
+}
+
+/* Accordion styles */
+.accordion {
+  background: white;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.accordion .header {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border: 1px solid #e9ecef;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #333;
+}
+
+.accordion .header:hover {
+  background: #e9ecef;
+}
+
+.accordion .header.active {
+  background: #007bff;
+  color: white;
+}
+
+/* Clear button */
+.clear-button {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.clear-button button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.clear-button button:hover {
+  background: #c82333;
+}
+
+/* Footnote */
+.footnote {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  #grid {
+    display: block;
+  }
+  
+  .main {
+    min-height: 50vh;
+  }
+  
+  .footnote-main {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .diamond-text {
+    margin-left: 0;
+    margin-top: 20px;
+  }
 } 
