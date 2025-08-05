@@ -107,7 +107,7 @@ export default function CaratSelector({ onCaratSelect, selectedCarat, selectedSh
         </div>
         
         <p className="info">
-          Carat weight refers to the measurement of a diamond's weight.
+          Carat weight refers to the measurement of a diamond&apos;s weight.
         </p>
       </div>
     </div>

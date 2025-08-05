@@ -8,52 +8,10 @@ interface AIAnalysisProps {
 }
 
 export default function AIAnalysis({ selections }: AIAnalysisProps) {
-  const [analysis, setAnalysis] = useState<string>('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>('');
+  const [showInfo, setShowInfo] = useState(false);
 
-  const getAIAnalysis = async () => {
-    // Check if all selections are made
-    const hasAllSelections = selections.selectedShape && selections.selectedCarat && selections.selectedClarity && selections.selectedColor && selections.selectedCut;
-    
-    if (!hasAllSelections) {
-      setError('Please select all diamond attributes before getting AI analysis.');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
-    try {
-      const response = await fetch('/api/openai', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          action: 'recommendation',
-          data: {
-            shape: selections.selectedShape,
-            carat: selections.selectedCarat,
-            clarity: selections.selectedClarity,
-            color: selections.selectedColor,
-            cut: selections.selectedCut,
-          },
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setAnalysis(data.result);
-      } else {
-        setError(data.error || 'Failed to get AI analysis');
-      }
-    } catch (err) {
-      setError('Failed to connect to AI service');
-    } finally {
-      setLoading(false);
-    }
+  const handleAIClick = () => {
+    setShowInfo(true);
   };
 
   return (
@@ -61,28 +19,35 @@ export default function AIAnalysis({ selections }: AIAnalysisProps) {
       <div className="ai-header">
         <h3>🤖 AI Diamond Analysis</h3>
         <button
-          onClick={getAIAnalysis}
-          disabled={loading}
+          onClick={handleAIClick}
           className="ai-button"
         >
-          {loading ? 'Analyzing...' : 'Get AI Analysis'}
+          Get AI Analysis
         </button>
       </div>
 
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
-
-      {analysis && (
-        <div className="analysis-result">
-          <h4>AI Analysis:</h4>
-          <div className="analysis-content">
-            {analysis.split('\n').map((line, index) => (
-              <p key={index}>{line}</p>
-            ))}
-          </div>
+      {showInfo && (
+        <div className="info-message">
+          <h4>AI Features</h4>
+          <p>
+            AI-powered diamond analysis is available in the full version of this app. 
+            This static version includes all the diamond selection and rarity calculation features.
+          </p>
+          <p>
+            <strong>Features included:</strong>
+          </p>
+          <ul>
+            <li>✅ Diamond shape selection</li>
+            <li>✅ Carat weight selection</li>
+            <li>✅ Clarity grade selection</li>
+            <li>✅ Color grade selection</li>
+            <li>✅ Cut grade selection</li>
+            <li>✅ Rarity calculations</li>
+            <li>✅ Percentage analysis</li>
+          </ul>
+          <p>
+            <em>For AI analysis, please run the app locally with the full Next.js server.</em>
+          </p>
         </div>
       )}
 
@@ -119,45 +84,43 @@ export default function AIAnalysis({ selections }: AIAnalysisProps) {
           transition: all 0.3s ease;
         }
 
-        .ai-button:hover:not(:disabled) {
+        .ai-button:hover {
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
-        .ai-button:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .error-message {
-          background: #f8d7da;
-          color: #721c24;
-          padding: 10px;
-          border-radius: 4px;
-          margin-bottom: 15px;
-          border: 1px solid #f5c6cb;
-        }
-
-        .analysis-result {
+        .info-message {
           background: white;
-          padding: 15px;
+          padding: 20px;
           border-radius: 8px;
           border: 1px solid #dee2e6;
         }
 
-        .analysis-result h4 {
-          margin: 0 0 10px 0;
+        .info-message h4 {
+          margin: 0 0 15px 0;
           color: #333;
           font-size: 16px;
         }
 
-        .analysis-content {
+        .info-message p {
+          margin: 10px 0;
           line-height: 1.6;
           color: #495057;
         }
 
-        .analysis-content p {
-          margin: 8px 0;
+        .info-message ul {
+          margin: 15px 0;
+          padding-left: 20px;
+        }
+
+        .info-message li {
+          margin: 5px 0;
+          color: #495057;
+        }
+
+        .info-message em {
+          color: #6c757d;
+          font-style: italic;
         }
       `}</style>
     </div>

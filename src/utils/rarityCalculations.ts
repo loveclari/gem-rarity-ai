@@ -93,7 +93,6 @@ export function shapeCaratClarityColorCutRarity(shape: string, carat: string, cl
 
 export function calculateItemRatio(options: GemRarityData, data: GemData[]): string {
   let itemCount = 0;
-  let totalCount = data.length;
   let otherItemCount = 0;
 
   const defaultOptions = {
@@ -120,7 +119,6 @@ export function calculateItemRatio(options: GemRarityData, data: GemData[]): str
     }
   });
 
-  const totalItems = itemCount + otherItemCount;
   const ratio = itemCount > 0 ? otherItemCount / itemCount : 0;
 
   if (ratio === 0) return "1 in 1";

@@ -1,5 +1,5 @@
 import gemData from '@/data/gemData';
-import { RarityResult } from '@/types';
+import { RarityResult, GemData } from '@/types';
 
 export function getGemData() {
   return gemData;
@@ -11,7 +11,7 @@ export function calculateRarity(
   clarity: string,
   color: string,
   cut: string,
-  data: any[]
+  data: GemData[]
 ): RarityResult {
   // Filter data based on selections
   const filteredData = data.filter(item => 

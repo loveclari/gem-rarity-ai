@@ -8,7 +8,7 @@ import ClaritySelector from '@/components/ClaritySelector';
 import ColorSelector from '@/components/ColorSelector';
 import CutSelector from '@/components/CutSelector';
 import AIAnalysis from '@/components/AIAnalysis';
-import { SelectionState, RarityResult } from '@/types';
+import { SelectionState, RarityResult, GemData } from '@/types';
 import {
   calculateRarity,
   getGemData,
@@ -25,7 +25,7 @@ export default function Home() {
     selectedCut: null,
   });
   const [rarityResult, setRarityResult] = useState<RarityResult | null>(null);
-  const [gemData, setGemData] = useState<any[]>([]);
+  const [gemData, setGemData] = useState<GemData[]>([]);
 
   useEffect(() => {
     // Load gem data
