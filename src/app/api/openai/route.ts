@@ -12,11 +12,13 @@ export async function POST(request: NextRequest) {
     switch (action) {
       case 'recommendation':
         console.log('Generating recommendation for:', data);
-        result = await getDiamondRecommendation(data);
+        const { shape, carat, clarity, color, cut } = data;
+        result = await getDiamondRecommendation(shape, carat, clarity, color, cut);
         console.log('OpenAI response received successfully');
         break;
       case 'description':
-        result = await getDiamondDescription(data);
+        const { attribute, value } = data;
+        result = await getDiamondDescription(attribute, value);
         break;
       default:
         return NextResponse.json(
