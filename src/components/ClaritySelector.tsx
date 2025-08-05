@@ -101,9 +101,9 @@ export default function ClaritySelector({ onClaritySelect, selectedClarity, sele
           </div>
         </div>
         
-        <p className="info">
-          Clarity refers to the absence of inclusions and blemishes.
-        </p>
+        <div className="description-text">
+          <p>Clarity refers to the absence of inclusions and blemishes.</p>
+        </div>
       </div>
     </div>
   );

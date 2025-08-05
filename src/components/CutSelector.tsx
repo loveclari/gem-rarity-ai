@@ -84,9 +84,9 @@ export default function CutSelector({ onCutSelect, selectedCut, isOpen, onToggle
           </div>
         </div>
         
-        <p className="info">
-          Cut refers to how well a diamond&apos;s facets interact with light.
-        </p>
+        <div className="description-text">
+          <p>Cut refers to how well a diamond&apos;s facets interact with light.</p>
+        </div>
       </div>
     </div>
   );

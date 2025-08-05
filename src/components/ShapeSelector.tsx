@@ -94,9 +94,9 @@ export default function ShapeSelector({ onShapeSelect, selectedShape, isOpen, on
           </div>
         </div>
         
-        <p className="info">
-          Shape refers to the geometric outline and overall physical form of a diamond.
-        </p>
+        <div className="description-text">
+          <p>Shape refers to the geometric outline and overall physical form of a diamond.</p>
+        </div>
       </div>
     </div>
   );

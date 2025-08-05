@@ -91,9 +91,9 @@ export default function ColorSelector({ onColorSelect, selectedColor, isOpen, on
           </div>
         </div>
         
-        <p className="info">
-          The diamond color evaluation of most gem-quality diamonds is based on the absence of color.
-        </p>
+        <div className="description-text">
+          <p>The diamond color evaluation of most gem-quality diamonds is based on the absence of color.</p>
+        </div>
       </div>
     </div>
   );
