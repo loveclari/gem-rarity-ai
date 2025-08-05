@@ -25,6 +25,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Essential Next.js styles only - main styles come from styles.css */
+
 /* Accordion functionality */
 .accordion .content.open {
   display: flex !important;
