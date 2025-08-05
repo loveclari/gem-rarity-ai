@@ -72,13 +72,13 @@ export default function ShapeSelector({ onShapeSelect, selectedShape, isOpen, on
             {shapes.map((shape, index) => (
               <div
                 key={shape.id}
-                className={`slider-item ${selectedShape === shape.dataId ? 'selected' : ''}`}
+                className={`box${index + 1} box ${selectedShape === shape.dataId ? 'selected' : ''}`}
                 onClick={() => handleShapeClick(shape.dataId)}
               >
                 <div 
                   className="shape-image"
                   style={{
-                    background: `url(${shape.image})`,
+                    backgroundImage: `url(${shape.image})`,
                     backgroundSize: 'contain',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center'

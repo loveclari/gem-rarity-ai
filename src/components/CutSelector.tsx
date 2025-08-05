@@ -10,26 +10,28 @@ interface CutSelectorProps {
 }
 
 const cutGrades = [
-  { id: 'Poor-1', value: 'Poor', label: 'Poor' },
-  { id: 'Fair-1', value: 'Fair', label: 'Fair' },
-  { id: 'Good-1', value: 'Good', label: 'Good' },
-  { id: 'Very-Good-1', value: 'Very Good', label: 'Very Good' },
   { id: 'Excellent', value: 'Excellent', label: 'Excellent' },
-  { id: 'Very-Good-2', value: 'Very Good', label: 'Very Good' },
-  { id: 'Good-2', value: 'Good', label: 'Good' },
-  { id: 'Fair-2', value: 'Fair', label: 'Fair' },
-  { id: 'Poor-2', value: 'Poor', label: 'Poor' },
+  { id: 'Very Good', value: 'Very Good', label: 'Very Good' },
+  { id: 'Good', value: 'Good', label: 'Good' },
+  { id: 'Fair', value: 'Fair', label: 'Fair' },
+  { id: 'Poor', value: 'Poor', label: 'Poor' },
 ];
 
 export default function CutSelector({ onCutSelect, selectedCut, isOpen, onToggle }: CutSelectorProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const handleCutClick = (cut: string) => {
+    console.log('Cut clicked:', cut);
     if (selectedCut === cut) {
       onCutSelect('');
     } else {
       onCutSelect(cut);
     }
+  };
+
+  const handleHeaderClick = () => {
+    console.log('Header clicked, isOpen:', isOpen);
+    onToggle();
   };
 
   const scrollLeft = () => {
@@ -48,10 +50,10 @@ export default function CutSelector({ onCutSelect, selectedCut, isOpen, onToggle
     <div className="accordion-section">
       <div 
         className={`header ${selectedCut ? 'active' : ''}`}
-        onClick={onToggle}
+        onClick={handleHeaderClick}
       >
         <i className="fa fa-check"></i>
-        <span>CUT</span>
+        <span className="shape-name">CUT</span>
         {selectedCut && <span className="gem-shape">{selectedCut}</span>}
         <i className="fa fa-info-circle"></i>
       </div>
@@ -66,11 +68,11 @@ export default function CutSelector({ onCutSelect, selectedCut, isOpen, onToggle
             {cutGrades.map((cut, index) => (
               <div
                 key={cut.id}
-                className={`slider-item ${selectedCut === cut.value ? 'selected' : ''}`}
+                className={`box${index + 1} box ${selectedCut === cut.value ? 'selected' : ''}`}
                 onClick={() => handleCutClick(cut.value)}
               >
                 <div className="cut-image">
-                  <div className="cut-grade">{cut.label}</div>
+                  <span className="cut-grade">{cut.label}</span>
                 </div>
                 <div className="cut-text">{cut.label}</div>
               </div>

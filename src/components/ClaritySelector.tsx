@@ -28,6 +28,7 @@ export default function ClaritySelector({ onClaritySelect, selectedClarity, sele
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const handleClarityClick = (clarity: string) => {
+    console.log('Clarity clicked:', clarity);
     if (selectedClarity === clarity) {
       onClaritySelect('');
     } else {
@@ -35,22 +36,9 @@ export default function ClaritySelector({ onClaritySelect, selectedClarity, sele
     }
   };
 
-  const getBackgroundImage = () => {
-    if (!selectedShape) return '';
-    
-    const shapeImages: { [key: string]: string } = {
-      'Round': '/img/Round.png',
-      'Square': '/img/Square.png',
-      'Heart': '/img/Heart.png',
-      'Cushion': '/img/Cushion.png',
-      'Oval': '/img/Oval.png',
-      'Rectangle': '/img/Rectangle.png',
-      'Emerald': '/img/Emerald.png',
-      'Pear': '/img/Pear.png',
-      'Marquise': '/img/Marquise.png',
-    };
-    
-    return shapeImages[selectedShape] || '';
+  const handleHeaderClick = () => {
+    console.log('Header clicked, isOpen:', isOpen);
+    onToggle();
   };
 
   const scrollLeft = () => {
@@ -65,16 +53,21 @@ export default function ClaritySelector({ onClaritySelect, selectedClarity, sele
     }
   };
 
+  const getBackgroundImage = () => {
+    if (!selectedShape) return null;
+    return `/img/${selectedShape.toLowerCase()}-only.png`;
+  };
+
   const backgroundImage = getBackgroundImage();
 
   return (
     <div className="accordion-section">
       <div 
         className={`header ${selectedClarity ? 'active' : ''}`}
-        onClick={onToggle}
+        onClick={handleHeaderClick}
       >
         <i className="fa fa-check"></i>
-        <span>CLARITY</span>
+        <span className="shape-name">CLARITY</span>
         {selectedClarity && <span className="gem-shape">{selectedClarity}</span>}
         <i className="fa fa-info-circle"></i>
       </div>
@@ -89,10 +82,10 @@ export default function ClaritySelector({ onClaritySelect, selectedClarity, sele
             {clarityGrades.map((clarity, index) => (
               <div
                 key={clarity.id}
-                className={`slider-item ${selectedClarity === clarity.value ? 'selected' : ''}`}
+                className={`box${index + 1} box ${selectedClarity === clarity.value ? 'selected' : ''}`}
                 onClick={() => handleClarityClick(clarity.value)}
               >
-                <div 
+                <div
                   className="clarity-image"
                   style={{
                     backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none'
@@ -109,7 +102,7 @@ export default function ClaritySelector({ onClaritySelect, selectedClarity, sele
         </div>
         
         <p className="info">
-          Minor inclusions that range from difficult to somewhat easy to see are visible to a skilled grader at 10x.
+          Clarity refers to the absence of inclusions and blemishes.
         </p>
       </div>
     </div>

@@ -17,21 +17,28 @@ const colorGrades = [
   { id: 'H', value: 'H', label: 'H' },
   { id: 'I', value: 'I', label: 'I' },
   { id: 'J', value: 'J', label: 'J' },
+  { id: 'K', value: 'K', label: 'K' },
+  { id: 'L', value: 'L', label: 'L' },
   { id: 'M', value: 'M', label: 'M' },
   { id: 'N', value: 'N', label: 'N' },
   { id: 'O', value: 'O', label: 'O' },
-  { id: 'P', value: 'P', label: 'P' },
 ];
 
 export default function ColorSelector({ onColorSelect, selectedColor, isOpen, onToggle }: ColorSelectorProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const handleColorClick = (color: string) => {
+    console.log('Color clicked:', color);
     if (selectedColor === color) {
       onColorSelect('');
     } else {
       onColorSelect(color);
     }
+  };
+
+  const handleHeaderClick = () => {
+    console.log('Header clicked, isOpen:', isOpen);
+    onToggle();
   };
 
   const scrollLeft = () => {
@@ -50,10 +57,10 @@ export default function ColorSelector({ onColorSelect, selectedColor, isOpen, on
     <div className="accordion-section">
       <div 
         className={`header ${selectedColor ? 'active' : ''}`}
-        onClick={onToggle}
+        onClick={handleHeaderClick}
       >
         <i className="fa fa-check"></i>
-        <span>COLOR</span>
+        <span className="shape-name">COLOR</span>
         {selectedColor && <span className="gem-shape">{selectedColor}</span>}
         <i className="fa fa-info-circle"></i>
       </div>
@@ -68,11 +75,11 @@ export default function ColorSelector({ onColorSelect, selectedColor, isOpen, on
             {colorGrades.map((color, index) => (
               <div
                 key={color.id}
-                className={`slider-item ${selectedColor === color.value ? 'selected' : ''}`}
+                className={`box${index + 1} box ${selectedColor === color.value ? 'selected' : ''}`}
                 onClick={() => handleColorClick(color.value)}
               >
                 <div className="color-image">
-                  <div className="color-grade">{color.label}</div>
+                  <span className="color-grade">{color.label}</span>
                 </div>
                 <div className="color-text">{color.label}</div>
               </div>

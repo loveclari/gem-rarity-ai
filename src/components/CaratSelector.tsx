@@ -11,21 +11,19 @@ interface CaratSelectorProps {
 }
 
 const caratRanges = [
-  { id: 'carat1-030-039', value: '0.30-0.39', label: '0.30-0.39' },
-  { id: 'carat1-040-049', value: '0.40-0.49', label: '0.40-0.49' },
-  { id: 'carat1-050-069', value: '0.50-0.69', label: '0.50-0.69' },
-  { id: 'carat-100-149', value: '1.00-1.49', label: '1.00-1.49' },
-  { id: 'carat-150-199', value: '1.50-1.99', label: '1.50-1.99' },
-  { id: 'carat-200', value: '200', label: '2.00+' },
-  { id: 'carat2-030-039', value: '0.30-0.39', label: '0.30-0.39' },
-  { id: 'carat2-040-049', value: '0.40-0.49', label: '0.40-0.49' },
-  { id: 'carat2-050-069', value: '0.50-0.69', label: '0.50-0.69' },
+  { id: '0.30-0.39', value: '0.30-0.39', label: '0.30-0.39' },
+  { id: '0.40-0.49', value: '0.40-0.49', label: '0.40-0.49' },
+  { id: '0.50-0.69', value: '0.50-0.69', label: '0.50-0.69' },
+  { id: '1.00-1.49', value: '1.00-1.49', label: '1.00-1.49' },
+  { id: '1.50-1.99', value: '1.50-1.99', label: '1.50-1.99' },
+  { id: '2.00+', value: '2.00+', label: '2.00+' },
 ];
 
 export default function CaratSelector({ onCaratSelect, selectedCarat, selectedShape, isOpen, onToggle }: CaratSelectorProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const handleCaratClick = (carat: string) => {
+    console.log('Carat clicked:', carat);
     if (selectedCarat === carat) {
       onCaratSelect('');
     } else {
@@ -33,22 +31,9 @@ export default function CaratSelector({ onCaratSelect, selectedCarat, selectedSh
     }
   };
 
-  const getBackgroundImage = () => {
-    if (!selectedShape) return '';
-    
-    const shapeImages: { [key: string]: string } = {
-      'Round': '/img/Round.png',
-      'Square': '/img/Square.png',
-      'Heart': '/img/Heart.png',
-      'Cushion': '/img/Cushion.png',
-      'Oval': '/img/Oval.png',
-      'Rectangle': '/img/Rectangle.png',
-      'Emerald': '/img/Emerald.png',
-      'Pear': '/img/Pear.png',
-      'Marquise': '/img/Marquise.png',
-    };
-    
-    return shapeImages[selectedShape] || '';
+  const handleHeaderClick = () => {
+    console.log('Header clicked, isOpen:', isOpen);
+    onToggle();
   };
 
   const scrollLeft = () => {
@@ -63,16 +48,21 @@ export default function CaratSelector({ onCaratSelect, selectedCarat, selectedSh
     }
   };
 
+  const getBackgroundImage = () => {
+    if (!selectedShape) return null;
+    return `/img/${selectedShape.toLowerCase()}-only.png`;
+  };
+
   const backgroundImage = getBackgroundImage();
 
   return (
     <div className="accordion-section">
       <div 
         className={`header ${selectedCarat ? 'active' : ''}`}
-        onClick={onToggle}
+        onClick={handleHeaderClick}
       >
         <i className="fa fa-check"></i>
-        <span>CARAT WEIGHT</span>
+        <span className="shape-name">CARAT WEIGHT</span>
         {selectedCarat && <span className="gem-shape">{selectedCarat}</span>}
         <i className="fa fa-info-circle"></i>
       </div>
@@ -87,13 +77,16 @@ export default function CaratSelector({ onCaratSelect, selectedCarat, selectedSh
             {caratRanges.map((carat, index) => (
               <div
                 key={carat.id}
-                className={`slider-item ${selectedCarat === carat.value ? 'selected' : ''}`}
+                className={`box${index + 1} box ${selectedCarat === carat.value ? 'selected' : ''}`}
                 onClick={() => handleCaratClick(carat.value)}
               >
-                <div 
+                <div
                   className="carat-image"
                   style={{
-                    backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none'
+                    backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center'
                   }}
                 />
                 <div className="carat-text">{carat.label}</div>
