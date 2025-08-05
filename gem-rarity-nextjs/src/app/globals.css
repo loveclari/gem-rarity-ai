@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Accordion functionality */
+.accordion .content.open {
+  display: flex !important;
+}
+
+.accordion .content {
+  display: none;
+}
+
+/* Make sure accordion sections are clickable */
+.accordion .header {
+  cursor: pointer;
+}
+
+/* Show checkmark when active */
+.header.active .fa-check {
+  opacity: 1;
+}
+
+/* Slider Container */
+.slider-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  overflow: visible;
+}
+
+/* Slider */
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 0;
+  padding: 0 40px;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  height: 200px;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card Stack - Original style */
+.slider-item {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  min-width: 90px;
+  position: relative;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  margin-right: -35px;
+  transform: scale(0.4);
+  opacity: 0.5;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* First card - largest and most prominent */
+.slider-item:first-child {
+  margin-right: 0;
+  transform: scale(1);
+  opacity: 1;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+}
+
+/* Second card */
+.slider-item:nth-child(2) {
+  transform: scale(0.7);
+  opacity: 0.8;
+  z-index: 9;
+  pointer-events: auto;
+}
+
+/* Third card */
+.slider-item:nth-child(3) {
+  transform: scale(0.6);
+  opacity: 0.7;
+  z-index: 8;
+  pointer-events: auto;
+}
+
+/* Fourth card */
+.slider-item:nth-child(4) {
+  transform: scale(0.5);
+  opacity: 0.6;
+  z-index: 7;
+  pointer-events: auto;
+}
+
+/* Fifth card */
+.slider-item:nth-child(5) {
+  transform: scale(0.45);
+  opacity: 0.5;
+  z-index: 6;
+  pointer-events: auto;
+}
+
+/* Hover effects */
+.slider-item:hover {
+  transform: scale(1.1) !important;
+  opacity: 1 !important;
+  z-index: 100 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2) !important;
+  pointer-events: auto !important;
+}
+
+/* Selected state */
+.slider-item.selected {
+  background-color: rgba(100, 168, 226, 0.1);
+  border: 2px solid rgba(100, 168, 226, 1);
+  transform: scale(1.2) !important;
+  z-index: 200 !important;
+  box-shadow: 0 8px 20px rgba(100, 168, 226, 0.3) !important;
+  pointer-events: auto !important;
+}
+
+/* Image Styles */
+.shape-image,
+.carat-image,
+.clarity-image {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+
+/* Color and Cut Images */
+.color-image,
+.cut-image {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  color: #495057;
+}
+
+/* Grade Displays */
+.color-grade,
+.cut-grade {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Text Labels */
+.shape-text,
+.carat-text,
+.clarity-text,
+.color-text,
+.cut-text {
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  color: #495057;
+  transition: all 0.3s ease;
+}
+
+/* Chevron Styles */
+.chevron-left,
+.chevron-right {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 30px !important;
+  height: 30px !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 50 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.chevron-left {
+  left: 5px !important;
+}
+
+.chevron-right {
+  right: 5px !important;
+}
+
+.chevron-left:hover,
+.chevron-right:hover {
+  background-color: rgba(100, 168, 226, 0.1) !important;
+  transform: translateY(-50%) scale(1.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+.chevron-left i,
+.chevron-right i {
+  color: #666 !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+/* Content layout */
+.content {
+  flex-direction: column;
+  padding: 20px;
+}
+
+.info {
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+} 
