@@ -27,34 +27,38 @@ export default function Home() {
     setOpenSection(openSection === section ? null : section);
   };
 
-  const handleShapeSelect = (shape: string) => {
-    const newSelections = { ...selections, selectedShape: shape };
+  const applySelection = (newSelections: SelectionState) => {
     setSelections(newSelections);
     updateRarity(newSelections);
+    if (
+      newSelections.selectedShape &&
+      newSelections.selectedCarat &&
+      newSelections.selectedClarity &&
+      newSelections.selectedColor &&
+      newSelections.selectedCut
+    ) {
+      setOpenSection(null);
+    }
+  };
+
+  const handleShapeSelect = (shape: string) => {
+    applySelection({ ...selections, selectedShape: shape });
   };
 
   const handleCaratSelect = (carat: string) => {
-    const newSelections = { ...selections, selectedCarat: carat };
-    setSelections(newSelections);
-    updateRarity(newSelections);
+    applySelection({ ...selections, selectedCarat: carat });
   };
 
   const handleClaritySelect = (clarity: string) => {
-    const newSelections = { ...selections, selectedClarity: clarity };
-    setSelections(newSelections);
-    updateRarity(newSelections);
+    applySelection({ ...selections, selectedClarity: clarity });
   };
 
   const handleColorSelect = (color: string) => {
-    const newSelections = { ...selections, selectedColor: color };
-    setSelections(newSelections);
-    updateRarity(newSelections);
+    applySelection({ ...selections, selectedColor: color });
   };
 
   const handleCutSelect = (cut: string) => {
-    const newSelections = { ...selections, selectedCut: cut };
-    setSelections(newSelections);
-    updateRarity(newSelections);
+    applySelection({ ...selections, selectedCut: cut });
   };
 
   const updateRarity = async (currentSelections: SelectionState) => {
@@ -129,7 +133,9 @@ export default function Home() {
         <Image src="/img/gia-logo.png" alt="GIA Logo" width={200} height={60} />
         <h1>Welcome to the GIA Rarity App</h1>
         <h2>Start by selecting a dimension and value.</h2>
-        <div className="big-diamond-blink"></div>
+        <div className="hero-stage">
+          <div className="big-diamond-blink"></div>
+        </div>
         <div className="footnote-main">
           <div className="diamond-img"></div>
           <div className="diamond-text">

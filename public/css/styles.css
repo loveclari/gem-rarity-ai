@@ -8,7 +8,9 @@
 	display: grid;
 	-ms-grid-columns: 2fr 1fr;
 	grid-template-columns: 2fr 1fr;
-	grid-template-rows: minmax(100vh, auto);
+	grid-template-rows: minmax(100vh, max-content);
+	align-items: stretch;
+	min-height: 100vh;
 }
 
 .main {
@@ -137,7 +139,7 @@ img {
 	background-repeat: no-repeat;
 	opacity: 1;
 	animation: blinking 3s ease infinite;
-	flex-grow: 1;
+	flex-grow: 0;
 }
 h1 {
 	font-weight: 600 !important;
