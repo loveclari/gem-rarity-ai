@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import ShapeSelector from '@/components/ShapeSelector';
 import CaratSelector from '@/components/CaratSelector';
@@ -8,15 +8,11 @@ import ClaritySelector from '@/components/ClaritySelector';
 import ColorSelector from '@/components/ColorSelector';
 import CutSelector from '@/components/CutSelector';
 import AIAnalysis from '@/components/AIAnalysis';
-import { SelectionState, RarityResult, GemData } from '@/types';
-import {
-  calculateRarity,
-  getGemData,
-  getRarityDescription
-} from '@/lib/rarity';
+import { SelectionState, RarityResult } from '@/types';
 
 export default function Home() {
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const [analysisKey, setAnalysisKey] = useState(0);
   const [selections, setSelections] = useState<SelectionState>({
     selectedShape: null,
     selectedCarat: null,
@@ -25,13 +21,7 @@ export default function Home() {
     selectedCut: null,
   });
   const [rarityResult, setRarityResult] = useState<RarityResult | null>(null);
-  const [gemData, setGemData] = useState<GemData[]>([]);
-
-  useEffect(() => {
-    // Load gem data
-    const data = getGemData();
-    setGemData(data);
-  }, []);
+  const rarityRequest = useRef<AbortController | null>(null);
 
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
@@ -67,28 +57,42 @@ export default function Home() {
     updateRarity(newSelections);
   };
 
-  const updateRarity = (currentSelections: SelectionState) => {
-    if (currentSelections.selectedShape && 
-        currentSelections.selectedCarat && 
-        currentSelections.selectedClarity && 
-        currentSelections.selectedColor && 
-        currentSelections.selectedCut) {
-      
-      const result = calculateRarity(
-        currentSelections.selectedShape,
-        currentSelections.selectedCarat,
-        currentSelections.selectedClarity,
-        currentSelections.selectedColor,
+  const updateRarity = async (currentSelections: SelectionState) => {
+    const hasSelection = Boolean(
+      currentSelections.selectedShape ||
+        currentSelections.selectedCarat ||
+        currentSelections.selectedClarity ||
+        currentSelections.selectedColor ||
         currentSelections.selectedCut,
-        gemData
-      );
-      setRarityResult(result);
-    } else {
+    );
+
+    rarityRequest.current?.abort();
+
+    if (!hasSelection) {
       setRarityResult(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    rarityRequest.current = controller;
+
+    try {
+      const response = await fetch('/api/rarity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentSelections),
+        signal: controller.signal,
+      });
+      if (!response.ok) return;
+      const data = (await response.json()) as { result?: RarityResult | null };
+      setRarityResult(data.result ?? null);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
     }
   };
 
   const clearSelections = () => {
+    rarityRequest.current?.abort();
     setSelections({
       selectedShape: null,
       selectedCarat: null,
@@ -97,6 +101,8 @@ export default function Home() {
       selectedCut: null,
     });
     setRarityResult(null);
+    setOpenSection(null);
+    setAnalysisKey((key) => key + 1);
   };
 
   const getSelectedValues = () => {
@@ -109,11 +115,13 @@ export default function Home() {
     return values.join(', ');
   };
 
-  const hasAllSelections = selections.selectedShape && 
-                          selections.selectedCarat && 
-                          selections.selectedClarity && 
-                          selections.selectedColor && 
-                          selections.selectedCut;
+  const hasAnySelection = Boolean(
+    selections.selectedShape ||
+      selections.selectedCarat ||
+      selections.selectedClarity ||
+      selections.selectedColor ||
+      selections.selectedCut,
+  );
 
   return (
     <div id="grid">
@@ -130,7 +138,7 @@ export default function Home() {
               {getSelectedValues() || 'Make a selection'}
             </p>
           </div>
-          <div className="slidecontainer">
+          <div className={`slidecontainer${rarityResult ? ' has-rarity' : ''}`}>
             {rarityResult && (
               <div>
                 <p className="range-paragraph">RARITY</p>
@@ -170,6 +178,7 @@ export default function Home() {
         <ColorSelector 
           onColorSelect={handleColorSelect}
           selectedColor={selections.selectedColor}
+          selectedShape={selections.selectedShape}
           isOpen={openSection === 'color'}
           onToggle={() => toggleSection('color')}
         />
@@ -177,13 +186,16 @@ export default function Home() {
         <CutSelector 
           onCutSelect={handleCutSelect}
           selectedCut={selections.selectedCut}
+          selectedShape={selections.selectedShape}
           isOpen={openSection === 'cut'}
           onToggle={() => toggleSection('cut')}
         />
         
-        {hasAllSelections && (
+        <AIAnalysis key={analysisKey} selections={selections} />
+
+        {hasAnySelection && (
           <div className="clear-button">
-            <button onClick={clearSelections}>
+            <button type="button" onClick={clearSelections}>
               Clear Selections
             </button>
           </div>
@@ -196,9 +208,6 @@ export default function Home() {
           </p>
         </div>
       </form>
-
-      {/* AI Analysis Component */}
-      <AIAnalysis selections={selections} />
     </div>
   );
 }

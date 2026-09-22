@@ -1,21 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDiamondRecommendation, getDiamondDescription } from '@/lib/openai';
+import { getLocalDiamondAnalysis } from '@/lib/local-analysis';
+
+function isBillingError(message: string) {
+  const text = message.toLowerCase();
+  return (
+    text.includes('credit') ||
+    text.includes('quota') ||
+    text.includes('billing') ||
+    text.includes('insufficient')
+  );
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { action, data } = body;
 
-    console.log('Processing OpenAI request:', { action, data });
-
     let result;
     switch (action) {
-      case 'recommendation':
-        console.log('Generating recommendation for:', data);
+      case 'recommendation': {
         const { shape, carat, clarity, color, cut } = data;
-        result = await getDiamondRecommendation(shape, carat, clarity, color, cut);
-        console.log('OpenAI response received successfully');
+        try {
+          result = await getDiamondRecommendation(shape, carat, clarity, color, cut);
+        } catch {
+          result = getLocalDiamondAnalysis(shape, carat, clarity, color, cut);
+        }
         break;
+      }
       case 'description':
         const { attribute, value } = data;
         result = await getDiamondDescription(attribute, value);
@@ -29,20 +41,18 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ result });
   } catch (error: any) {
-    console.error('OpenAI API Error:', error);
-    
-    let errorMessage = 'An error occurred while processing your request.';
+    const raw = error.message || 'An error occurred while processing your request.';
+    let errorMessage = raw;
     let statusCode = 500;
 
-    if (error.message?.includes('API key')) {
-      errorMessage = 'OpenAI API key is invalid or missing. Please check your .env.local file and restart the server.';
+    if (raw.includes('API key') || raw.includes('Incorrect API key')) {
+      errorMessage =
+        'OpenAI API key is missing or invalid. Add OPENAI_API_KEY in Vercel and redeploy.';
       statusCode = 401;
-    } else if (error.message?.includes('quota')) {
-      errorMessage = 'OpenAI API quota exceeded. Please check your billing details.';
+    } else if (isBillingError(raw)) {
+      errorMessage =
+        'OpenAI has no remaining credits. Add billing on platform.openai.com or use the local analysis fallback.';
       statusCode = 429;
-    } else if (error.message?.includes('model')) {
-      errorMessage = 'OpenAI model access error. Please try again later.';
-      statusCode = 403;
     }
 
     return NextResponse.json(
@@ -50,4 +60,5 @@ export async function POST(request: NextRequest) {
       { status: statusCode }
     );
   }
-} 
+}
+ 

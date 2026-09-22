@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import CardCarousel, { CarouselCard } from '@/components/CardCarousel';
+import { overlayImageForShape } from '@/lib/shape-images';
 
 interface CaratSelectorProps {
   onCaratSelect: (carat: string) => void;
@@ -11,98 +12,58 @@ interface CaratSelectorProps {
 }
 
 const caratRanges = [
-  { id: '0.30-0.39', value: '0.30-0.39', label: '0.30-0.39' },
-  { id: '0.40-0.49', value: '0.40-0.49', label: '0.40-0.49' },
-  { id: '0.50-0.69', value: '0.50-0.69', label: '0.50-0.69' },
-  { id: '1.00-1.49', value: '1.00-1.49', label: '1.00-1.49' },
-  { id: '1.50-1.99', value: '1.50-1.99', label: '1.50-1.99' },
-  { id: '2.00+', value: '2.00+', label: '2.00+' },
+  { value: '0.30-0.39', label: '0.30-0.39', image: '/img/030-039.png' },
+  { value: '0.40-0.49', label: '0.40-0.49', image: '/img/040-049.png' },
+  { value: '0.50-0.69', label: '0.50-0.69', image: '/img/050-069.png' },
+  { value: '1.00-1.49', label: '1.00-1.49', image: '/img/100-149.png' },
+  { value: '1.50-1.99', label: '1.50-1.99', image: '/img/150-199.png' },
+  { value: '2.00+', label: '2.00+', image: '/img/200.png' },
 ];
 
-export default function CaratSelector({ onCaratSelect, selectedCarat, selectedShape, isOpen, onToggle }: CaratSelectorProps) {
-  const sliderRef = useRef<HTMLDivElement>(null);
-
-  const handleCaratClick = (carat: string) => {
-    console.log('Carat clicked:', carat);
-    if (selectedCarat === carat) {
-      onCaratSelect('');
-    } else {
-      onCaratSelect(carat);
-    }
-  };
-
-  const handleHeaderClick = () => {
-    console.log('Header clicked, isOpen:', isOpen);
-    onToggle();
-  };
-
-  const scrollLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-    }
-  };
-
-  const getBackgroundImage = () => {
-    if (!selectedShape) return null;
-    return `/img/${selectedShape.toLowerCase()}-only.png`;
-  };
-
-  const backgroundImage = getBackgroundImage();
+export default function CaratSelector({
+  onCaratSelect,
+  selectedCarat,
+  selectedShape,
+  isOpen,
+  onToggle,
+}: CaratSelectorProps) {
+  const shapeImage = overlayImageForShape(selectedShape);
+  const selectedIndex = caratRanges.findIndex(
+    (carat) => carat.value === selectedCarat,
+  );
 
   return (
     <div className="accordion-section">
-      <div 
+      <button
+        type="button"
         className={`header ${selectedCarat ? 'active' : ''}`}
-        onClick={handleHeaderClick}
+        onClick={onToggle}
       >
         <i className="fa fa-check"></i>
         <span className="shape-name">CARAT WEIGHT</span>
         {selectedCarat && <span className="gem-shape">{selectedCarat}</span>}
-        <i className="fa fa-info-circle"></i>
-      </div>
+      </button>
 
       <div className={`content ${isOpen ? 'open' : ''}`}>
-        <div className="slider-container">
-          <div className="chevron-left" onClick={scrollLeft}>
-            <i className="fa fa-chevron-left"></i>
-          </div>
-          
-          <div className="slider carat" ref={sliderRef}>
-            {caratRanges.map((carat, index) => (
-              <div
-                key={carat.id}
-                className={`box${index + 1} box ${selectedCarat === carat.value ? 'selected' : ''}`}
-                onClick={() => handleCaratClick(carat.value)}
-              >
-                <div
-                  className="carat-image"
-                  style={{
-                    backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center'
-                  }}
-                />
-                <div className="carat-text">{carat.label}</div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="chevron-right" onClick={scrollRight}>
-            <i className="fa fa-chevron-right"></i>
-          </div>
-        </div>
-        
+        <CardCarousel selectedIndex={selectedIndex >= 0 ? selectedIndex : undefined}>
+          {caratRanges.map((carat) => (
+            <CarouselCard
+              key={carat.value}
+              label={carat.label}
+              image={shapeImage}
+              showLabel
+              selected={selectedCarat === carat.value}
+              onClick={() =>
+                onCaratSelect(selectedCarat === carat.value ? '' : carat.value)
+              }
+            />
+          ))}
+        </CardCarousel>
+
         <div className="description-text">
           <p>Carat weight refers to the measurement of a diamond&apos;s weight.</p>
         </div>
       </div>
     </div>
   );
-} 
+}

@@ -1,100 +1,77 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import CardCarousel, { CarouselCard } from '@/components/CardCarousel';
+import { overlayImageForShape } from '@/lib/shape-images';
 
 interface ColorSelectorProps {
   onColorSelect: (color: string) => void;
   selectedColor: string | null;
+  selectedShape: string | null;
   isOpen: boolean;
   onToggle: () => void;
 }
 
 const colorGrades = [
-  { id: 'D', value: 'D', label: 'D' },
-  { id: 'E', value: 'E', label: 'E' },
-  { id: 'F', value: 'F', label: 'F' },
-  { id: 'G', value: 'G', label: 'G' },
-  { id: 'H', value: 'H', label: 'H' },
-  { id: 'I', value: 'I', label: 'I' },
-  { id: 'J', value: 'J', label: 'J' },
-  { id: 'K', value: 'K', label: 'K' },
-  { id: 'L', value: 'L', label: 'L' },
-  { id: 'M', value: 'M', label: 'M' },
-  { id: 'N', value: 'N', label: 'N' },
-  { id: 'O', value: 'O', label: 'O' },
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
 ];
 
-export default function ColorSelector({ onColorSelect, selectedColor, isOpen, onToggle }: ColorSelectorProps) {
-  const sliderRef = useRef<HTMLDivElement>(null);
-
-  const handleColorClick = (color: string) => {
-    console.log('Color clicked:', color);
-    if (selectedColor === color) {
-      onColorSelect('');
-    } else {
-      onColorSelect(color);
-    }
-  };
-
-  const handleHeaderClick = () => {
-    console.log('Header clicked, isOpen:', isOpen);
-    onToggle();
-  };
-
-  const scrollLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-    }
-  };
+export default function ColorSelector({
+  onColorSelect,
+  selectedColor,
+  selectedShape,
+  isOpen,
+  onToggle,
+}: ColorSelectorProps) {
+  const shapeImage = overlayImageForShape(selectedShape);
+  const selectedIndex = colorGrades.findIndex((color) => color === selectedColor);
 
   return (
     <div className="accordion-section">
-      <div 
+      <button
+        type="button"
         className={`header ${selectedColor ? 'active' : ''}`}
-        onClick={handleHeaderClick}
+        onClick={onToggle}
       >
         <i className="fa fa-check"></i>
         <span className="shape-name">COLOR</span>
         {selectedColor && <span className="gem-shape">{selectedColor}</span>}
-        <i className="fa fa-info-circle"></i>
-      </div>
+      </button>
 
       <div className={`content ${isOpen ? 'open' : ''}`}>
-        <div className="slider-container">
-          <div className="chevron-left" onClick={scrollLeft}>
-            <i className="fa fa-chevron-left"></i>
-          </div>
-          
-          <div className="slider color" ref={sliderRef}>
-            {colorGrades.map((color, index) => (
-              <div
-                key={color.id}
-                className={`box${index + 1} box ${selectedColor === color.value ? 'selected' : ''}`}
-                onClick={() => handleColorClick(color.value)}
-              >
-                <div className="color-image">
-                  <span className="color-grade">{color.label}</span>
-                </div>
-                <div className="color-text">{color.label}</div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="chevron-right" onClick={scrollRight}>
-            <i className="fa fa-chevron-right"></i>
-          </div>
-        </div>
-        
+        <CardCarousel selectedIndex={selectedIndex >= 0 ? selectedIndex : undefined}>
+          {colorGrades.map((color) => (
+            <CarouselCard
+              key={color}
+              label={color}
+              image={shapeImage}
+              showLabel
+              selected={selectedColor === color}
+              onClick={() =>
+                onColorSelect(selectedColor === color ? '' : color)
+              }
+            />
+          ))}
+        </CardCarousel>
+
         <div className="description-text">
-          <p>The diamond color evaluation of most gem-quality diamonds is based on the absence of color.</p>
+          <p>
+            The diamond color evaluation of most gem-quality diamonds is based
+            on the absence of color.
+          </p>
         </div>
       </div>
     </div>
   );
-} 
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import CardCarousel, { CarouselCard } from '@/components/CardCarousel';
 
 interface ShapeSelectorProps {
   onShapeSelect: (shape: string) => void;
@@ -10,94 +10,56 @@ interface ShapeSelectorProps {
 }
 
 const shapes = [
-  { id: 'pear', name: 'Pear', dataId: 'Pear', image: '/img/Pear.png' },
-  { id: 'Round', name: 'Round', dataId: 'Round', image: '/img/round-only.png' },
-  { id: 'heart', name: 'Heart', dataId: 'Heart', image: '/img/heart-only.png' },
-  { id: 'marquise', name: 'Marquise', dataId: 'Marquise', image: '/img/Marquise.png' },
-  { id: 'cushion', name: 'Cushion', dataId: 'Cushion', image: '/img/cushion-only.png' },
-  { id: 'oval', name: 'Oval', dataId: 'Oval', image: '/img/Oval.png' },
-  { id: 'square', name: 'Square', dataId: 'Square', image: '/img/square-only.png' },
-  { id: 'emerald', name: 'Emerald', dataId: 'Emerald', image: '/img/emerald-only.png' },
-  { id: 'rectangle', name: 'Rectangle', dataId: 'Rectangle', image: '/img/rectangle-only.png' },
+  { id: 'Heart', name: 'Heart' },
+  { id: 'Pear', name: 'Pear' },
+  { id: 'Marquise', name: 'Marquise' },
+  { id: 'Cushion', name: 'Cushion' },
+  { id: 'Round', name: 'Round' },
+  { id: 'Oval', name: 'Oval' },
+  { id: 'Square', name: 'Square' },
+  { id: 'Emerald', name: 'Emerald' },
+  { id: 'Rectangle', name: 'Rectangle' },
 ];
 
-export default function ShapeSelector({ onShapeSelect, selectedShape, isOpen, onToggle }: ShapeSelectorProps) {
-  const sliderRef = useRef<HTMLDivElement>(null);
-
-  const handleShapeClick = (shape: string) => {
-    console.log('Shape clicked:', shape);
-    if (selectedShape === shape) {
-      onShapeSelect('');
-    } else {
-      onShapeSelect(shape);
-    }
-  };
-
-  const handleHeaderClick = () => {
-    console.log('Header clicked, isOpen:', isOpen);
-    onToggle();
-  };
-
-  const scrollLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-    }
-  };
+export default function ShapeSelector({
+  onShapeSelect,
+  selectedShape,
+  isOpen,
+  onToggle,
+}: ShapeSelectorProps) {
+  const selectedIndex = shapes.findIndex((shape) => shape.id === selectedShape);
 
   return (
     <div className="accordion-section">
-      <div 
+      <button
+        type="button"
         className={`header ${selectedShape ? 'active' : ''}`}
-        onClick={handleHeaderClick}
+        onClick={onToggle}
       >
         <i className="fa fa-check"></i>
         <span className="shape-name">SHAPE</span>
         {selectedShape && <span className="gem-shape">{selectedShape}</span>}
-        <i className="fa fa-info-circle"></i>
-      </div>
+      </button>
 
       <div className={`content ${isOpen ? 'open' : ''}`}>
-        <div className="slider-container">
-          <div className="chevron-left" onClick={scrollLeft}>
-            <i className="fa fa-chevron-left"></i>
-          </div>
-          
-          <div className="slider shape" ref={sliderRef}>
-            {shapes.map((shape, index) => (
-              <div
-                key={shape.id}
-                className={`box${index + 1} box ${selectedShape === shape.dataId ? 'selected' : ''}`}
-                onClick={() => handleShapeClick(shape.dataId)}
-              >
-                <div 
-                  className="shape-image"
-                  style={{
-                    backgroundImage: `url(${shape.image})`,
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center'
-                  }}
-                />
-                <div className="shape-text">{shape.name}</div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="chevron-right" onClick={scrollRight}>
-            <i className="fa fa-chevron-right"></i>
-          </div>
-        </div>
-        
+        <CardCarousel selectedIndex={selectedIndex >= 0 ? selectedIndex : undefined}>
+          {shapes.map((shape) => (
+            <CarouselCard
+              key={shape.id}
+              label={shape.name}
+              image={`/img/${shape.id}.png`}
+              selected={selectedShape === shape.id}
+              onClick={() =>
+                onShapeSelect(selectedShape === shape.id ? '' : shape.id)
+              }
+            />
+          ))}
+        </CardCarousel>
+
         <div className="description-text">
           <p>Shape refers to the geometric outline and overall physical form of a diamond.</p>
         </div>
       </div>
     </div>
   );
-} 
+}
